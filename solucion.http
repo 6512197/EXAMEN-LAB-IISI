@@ -1,0 +1,32 @@
+### Respuestas al examen de laboratorio. Curso 2022-23
+### Nombre del alumno: 
+### Grupo al que pertenece:
+
+### A continuación debe escribir las peticiones HTTP que dan
+### solución a las cuestiones planteadas puede añadir todos 
+### los comentarios que estime oportuno
+
+@BASE = http://127.0.0.1:8081/api/v1
+
+--### GET plataformas
+GET http://localhost:8081/api/platforms
+Accept: application/json
+
+#Reescriba las pruebas de aceptación de PA-2-01 como peticiones HTTP POST (limpie antes los datos existentes).
+
+
+### Limpieza previa
+DELETE http://localhost:8081/api/news
+
+
+
+### POST Noticia válida
+POST http://localhost:8081/api/news
+Content-Type: application/json
+
+{
+  "idVideojuego": 2,
+  "titular": "Noticia 1",
+  "numPalabras": 105,
+  "fechaPublicacion": "2022-08-02"
+}
