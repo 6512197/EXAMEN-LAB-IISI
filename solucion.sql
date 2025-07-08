@@ -143,7 +143,37 @@ CREATE TABLE IF NOT EXISTS Friendships (
   CHECK (idUser1 <> idUser2), -- Impide la autorelación (un usuario no puede ser amigo de sí mismo)
   UNIQUE (idUser1, idUser2)   -- Evita duplicados en relaciones de amistad
 );
+9. Procedimiento pAddTwoGenres(...) con transacción
+sql
+Copiar
+Editar
+DELIMITER //
 
+CREATE PROCEDURE pAddTwoGenres(
+  IN desc1 VARCHAR(64),
+  IN desc2 VARCHAR(64)
+)
+BEGIN
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: rollback realizado';
+  END;
+
+  START TRANSACTION;
+  INSERT INTO Genres(description) VALUES (desc1);
+  INSERT INTO Genres(description) VALUES (desc2); -- Podría violar UNIQUE
+  COMMIT;
+END;
+//
+
+DELIMITER ;
+
+--  Ejecución correcta:
+CALL pAddTwoGenres('Musical', 'Arcade');
+
+--  Ejecución fallida (por duplicado, p.ej. 'RPG' ya existe)
+CALL pAddTwoGenres('RPG', 'Arcade');
 -- Triggers
 
 DELIMITER //
