@@ -11,6 +11,8 @@
 --### GET plataformas
 GET http://localhost:8081/api/platforms
 Accept: application/json
+GET http://localhost:8081/api/videojuegos
+Accept: application/json
 
 #Reescriba las pruebas de aceptación de PA-2-01 como peticiones HTTP POST (limpie antes los datos existentes).
 
